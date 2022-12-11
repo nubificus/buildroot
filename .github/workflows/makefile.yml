@@ -1,0 +1,24 @@
+name: Build
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: [ self-hosted, "x86_64" ]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: configure
+      run: make hedge_config
+
+    - name: build
+      run: make
+
+    - name: Get artifacts
+      run: ls -latr output/images
